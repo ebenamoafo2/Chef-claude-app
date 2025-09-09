@@ -1,12 +1,21 @@
-# React + Vite
+## You have 2 options for what you can pass in to a state setter function (e.g. `setCount`). What are they?
+   1. Pass the new version of state that we want to use as the 
+      replacement for the old version of state.
+   2. Pass a callback function. Must return what we want the new
+      value of state to be. Will receive the old version of state
+      as a parameter so we can use it to help determine what we want 
+      the new value of state to be.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## When would you want to pass the first option (from answer
+   above) to the state setter function?
+   
+   Whenever we don't really care about (or need) the old value,
+   we simply want to set a new value.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## When would you want to pass the second option (from answer
+   above) to the state setter function?
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+   Whenever we do care about the previous value in state and need
+   it to help us determine what the new value should be.
