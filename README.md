@@ -7,15 +7,13 @@
       the new value of state to be.
 
 
-## When would you want to pass the first option (from answer
-   above) to the state setter function?
+## When would you want to pass the first option (from answer above) to the state setter function?
    
    Whenever we don't really care about (or need) the old value,
    we simply want to set a new value.
 
 
-## When would you want to pass the second option (from answer
-   above) to the state setter function?
+## When would you want to pass the second option (from answer above) to the state setter function?
 
    Whenever we do care about the previous value in state and need
    it to help us determine what the new value should be.
