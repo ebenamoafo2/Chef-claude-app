@@ -17,3 +17,146 @@
 
    Whenever we do care about the previous value in state and need
    it to help us determine what the new value should be.
+
+## Made this change on my handleSubmit form inside my main.jsx
+
+## Using the formdata.get() method brings in alot of benefits
+- Easy Access to form value: You can directly access the value of specific input without looping through the entire form 
+
+- You don't need to use the event.preventDefault() method to stop the page from refreshing everytime the use submits the form 
+
+- You don't need to worry about the content entered in the textbox still sitting there even after the use has entered an input 
+
+- It also works on a number of different input types like <input> <select><textarea><value> and even <input type="file">
+
+-No need to query DOM elements
+
+Instead of document.querySelector("#username").value, you just do formData.get("username").
+
+
+
+## FormData.get() doesn't work on radio bottoms 
+
+
+`FormData.get()` **does work with radio buttons**, but there are some rules that trip people up:
+
+---
+
+### 🔹 How radios work in forms
+
+* **Radio buttons are grouped by their `name` attribute**.
+* In a group, only **one radio can be selected at a time**.
+* The **value** of the *selected* radio is what goes into the form data.
+* If no radio in the group is selected → `formData.get("groupName")` will return **`null`**.
+
+---
+
+### ✅ Example that works
+
+```html
+<form id="myForm">
+  <input type="radio" name="gender" value="male"> Male
+  <input type="radio" name="gender" value="female" checked> Female
+</form>
+
+<script>
+  const form = document.getElementById("myForm");
+  const formData = new FormData(form);
+
+  console.log(formData.get("gender")); // "female"
+</script>
+```
+
+---
+
+### ❌ Why it might look like it doesn’t work
+
+1. **Missing `name` attribute**
+
+   ```html
+   <input type="radio" value="male">
+   <input type="radio" value="female">
+   ```
+
+   → Radios without a `name` aren’t grouped → `FormData` ignores them.
+
+2. **No radio selected**
+   If all radios are unchecked → `formData.get("gender")` returns `null`.
+
+3. **Using `id` instead of `name`**
+   Radios are grouped and retrieved by `name`, not `id`.
+
+---
+
+👉 **In short:**
+`FormData.get()` works perfectly with radio buttons, but you must:
+
+* Give them the same `name`.
+* Ensure at least one is checked.
+* Use `name` (not `id`) when calling `get()`.
+
+---
+
+
+Great follow-up 🙌 — this one is sneaky.
+
+### 🔹 Radios without a `value` attribute
+
+If you don’t give a radio button a `value`, the browser automatically gives it a **default value of `"on"`**.
+
+Example:
+
+```html
+<form id="myForm">
+  <input type="radio" name="gender"> Male
+  <input type="radio" name="gender" checked> Female
+</form>
+
+<script>
+  const form = document.getElementById("myForm");
+  const formData = new FormData(form);
+
+  console.log(formData.get("gender")); // "on"
+</script>
+```
+
+---
+
+### ✅ What happens
+
+* Since neither radio has an explicit `value`, whichever is checked will return `"on"`.
+* This makes it **impossible to tell which option was selected**, unless you check the element in the DOM separately (like with `querySelector`).
+
+---
+
+### 🚫 Why it’s a problem
+
+* You lose meaningful data (every option looks the same: `"on"`).
+* APIs or servers won’t know whether the user picked *Male* or *Female*.
+
+---
+
+### 💡 Best practice
+
+Always give radios a `value`:
+
+```html
+<input type="radio" name="gender" value="male"> Male
+<input type="radio" name="gender" value="female"> Female
+```
+
+Now:
+
+```js
+formData.get("gender"); // "male" or "female"
+```
+
+---
+
+👉 **Summary:**
+Without a `value` attribute, all selected radios just return `"on"`.
+To make `FormData.get()` useful, always define a meaningful `value`.
+
+---
+
+

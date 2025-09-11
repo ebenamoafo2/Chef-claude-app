@@ -12,10 +12,7 @@ export default function Main() {
     ))
 
      // Function to handle form submission
-    function handleSubmit(event) {
-        event.preventDefault() //Stop page reload
-        const formData = new FormData(event.currentTarget)
-
+    function handleSubmit(formData) {
         // Get the value of the input with name="ingredient"
         const newIngredient = formData.get("ingredient")
 
@@ -25,7 +22,7 @@ export default function Main() {
 
     return (
         <main>
-            <form onSubmit={handleSubmit} className="add-ingredient-form">
+            <form action={handleSubmit} className="add-ingredient-form">
                 <input
                     type="text"
                     placeholder="e.g. oregano"
