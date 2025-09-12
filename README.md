@@ -35,7 +35,7 @@ Instead of document.querySelector("#username").value, you just do formData.get("
 
 
 
-## FormData.get() doesn't work on radio bottoms 
+## FormData.get() doesn't work on radio bottoms [REFER TO SCRIMBA'S LESSON ON FORMS]
 
 
 `FormData.get()` **does work with radio buttons**, but there are some rules that trip people up:
@@ -157,6 +157,60 @@ formData.get("gender"); // "male" or "female"
 Without a `value` attribute, all selected radios just return `"on"`.
 To make `FormData.get()` useful, always define a meaningful `value`.
 
+
+
 ---
 
+### 📝 Notes on `FormData.get()` with Checkboxes
 
+* `formData.get(name)` → only returns the **first checked value** for a group of checkboxes with the same `name`.
+* This means if multiple checkboxes are selected, you’ll only see one value.
+
+Example:
+
+```html
+<input type="checkbox" name="skills" value="js" checked>
+<input type="checkbox" name="skills" value="react" checked>
+<input type="checkbox" name="skills" value="node">
+```
+
+```js
+formData.get("skills"); 
+// 👉 "js" (only the first checked one)
+```
+
+✅ To get **all checked values**, use `formData.getAll(name)`:
+
+```js
+formData.getAll("skills");
+// 👉 ["js", "react"]
+```
+
+---
+
+👉 **Rule of thumb:**
+
+* Use `get()` when expecting **one value** (text inputs, radios, single select).
+* Use `getAll()` when expecting **multiple values** (checkboxes, multi-select).
+
+
+
+## CONDITIONAL RENDERING
+
+1. What is "conditional rendering"?
+When we want to only sometimes display something on the page
+based on some kind of condition.
+
+
+2. When would you use &&?
+When you want to either display something or NOT display something.
+
+
+3. When would you use a ternary?
+When you need to decide which of 2 things to display
+
+
+4. What if you need to decide between > 2 options on
+   what to display?
+if...else if...else conditional or maybe a `switch` statement.
+ 
