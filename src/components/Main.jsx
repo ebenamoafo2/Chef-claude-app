@@ -1,22 +1,27 @@
 import { useState } from 'react'
+import ClaudeRecipe from '../components/ClaudeRecipe'
+import IngredientsList from '../components/IngredientsList'
 
 
-
+// Main component manages ingredients and recipe display
 export default function Main() {
-
+    // State to store the list of ingredients
     const [ingredients, setIngredients] = useState([])
 
-    // Map over the ingredients array to create <li> elements for each ingredient
-    const ingredientsListItems = ingredients.map(ingredient => (
-        <li key={ingredient}>{ingredient}</li>
-    ))
+    // State to control whether the recipe is shown
+    const [recipeShown, setRecipeShown] = useState(false)
+    
+    // Toggles the visibility of the recipe
+    function toggleRecipeShown() {
+        setRecipeShown(prevShown => !prevShown)
+    }
 
-     // Function to handle form submission when a new ingredient is added
+    // Handles form submission to add a new ingredient
     function handleSubmit(formData) {
-         // Get the input value from the form using its "name" attribute
+        // Get the input value from the form using its "name" attribute
         const newIngredient = formData.get("ingredient")
 
-        //  Update the state by adding the new ingredient to the existing list
+        // Update the state by adding the new ingredient to the existing list
         setIngredients(prevIngredients => [...prevIngredients, newIngredient])
     }
 
@@ -32,20 +37,15 @@ export default function Main() {
                 />
                 <button>Add ingredient</button>
             </form>
-            {/* Only shown this section if there are ingredients */}
-            { ingredients.length > 0 ? <section>
-                <h2>Ingredients on hand:</h2>
-                <ul className="ingredients-list" aria-live="polite">{ingredientsListItems}</ul>
-                
-                {/* If more than 3 ingredients, show the "Get a recipe" option */}
-                {ingredients.length > 3 && <div className="get-recipe-container">
-                    <div>
-                        <h3>Ready for a recipe?</h3>
-                        <p>Generate a recipe from your list of ingredients.</p>
-                    </div>
-                    <button>Get a recipe</button>
-                </div>}
-            </section> : null }
+            {/* Only show the ingredients list if there are ingredients */}
+            { ingredients.length > 0 && 
+                <IngredientsList 
+                    ingredients={ingredients}  
+                    toggleRecipeShown={toggleRecipeShown}
+                /> 
+            }
+            {/* Show the recipe if recipeShown is true */}
+            {recipeShown && <ClaudeRecipe />}
         </main>
     )
-} 
+}
