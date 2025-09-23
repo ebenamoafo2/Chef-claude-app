@@ -1,6 +1,4 @@
 
-
-
 export default function IngredientsList(props) {
 
     // Map over the ingredients array to create <li> elements for each ingredient

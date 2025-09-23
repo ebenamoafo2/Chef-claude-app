@@ -3,7 +3,6 @@ import ClaudeRecipe from '../components/ClaudeRecipe'
 import IngredientsList from '../components/IngredientsList'
 
 
-// Main component manages ingredients and recipe display
 export default function Main() {
     // State to store the list of ingredients
     const [ingredients, setIngredients] = useState([])
